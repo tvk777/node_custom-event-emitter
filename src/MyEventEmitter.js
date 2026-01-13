@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 'use strict';
 
 class MyEventEmitter {
@@ -45,9 +44,9 @@ class MyEventEmitter {
       return false;
     }
 
-    const listeners = this.listeners[event];
+    const listenersToCall = [...this.listeners[event]];
 
-    listeners.forEach((item) => {
+    listenersToCall.forEach((item) => {
       item.listener(...args);
 
       if (item.once) {
@@ -92,26 +91,3 @@ class MyEventEmitter {
 }
 
 module.exports = MyEventEmitter;
-
-const emiter = new MyEventEmitter();
-
-const list1 = () => 1;
-const list2 = () => 2;
-const list3 = () => 3;
-const list4 = () => 4;
-
-emiter.on('qwe', list1);
-emiter.on('qwe', list2);
-emiter.on('asd', list3);
-emiter.on('asd', list4);
-
-emiter.listenerCount('qwe');
-
-emiter.off('qwe', list1);
-emiter.off('asd', list3);
-
-emiter.listenerCount('qwe');
-
-emiter.removeAllListeners('qwe');
-
-emiter.listenerCount('qwe');
